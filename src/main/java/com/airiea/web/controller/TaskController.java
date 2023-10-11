@@ -1,12 +1,11 @@
 package com.airiea.web.controller;
 
-import com.airiea.model.operation.GetTaskRequest;
-import com.airiea.model.operation.GetTaskResponse;
 import com.airiea.model.resource.Task;
-import com.airiea.web.constant.ViewPath;
 import com.airiea.web.service.TaskService;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/task")
@@ -18,7 +17,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@RequestParam(name="id") final String taskId) {
-        return taskService.getTaskById(taskId);
+    public Task getTaskById(@PathVariable String id) {
+        return taskService.getTaskById(id);
     }
 }

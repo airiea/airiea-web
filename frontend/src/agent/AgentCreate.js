@@ -3,7 +3,6 @@ import axios from 'axios';
 import NavBar from "../common/NavBar";
 import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
-
 const AgentCreate = () => {
     const [agentName, setAgentName] = useState('');
     const [agentRole, setAgentRole] = useState('');

@@ -2,6 +2,7 @@ package com.airiea.web.controller.agent;
 
 import com.airiea.model.resource.Agent;
 import com.airiea.web.service.AgentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,9 @@ public class AgentMangerController {
     }
 
     @PostMapping("/create")
-    public void createAgent(@RequestBody Agent agent) {
+    public ResponseEntity<String> createAgent(@RequestBody Agent agent) {
         agentService.createAgent(agent);
+        return ResponseEntity.ok("Agent created successfully!");
     }
 
     @PostMapping("/list-all")

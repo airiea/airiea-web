@@ -23,7 +23,7 @@ const TaskSearch = () => {
         setError(null);
 
         try {
-            const response = await fetch(`/task-search/${searchQuery}`);
+            const response = await fetch(`/task-search/task_id/${searchQuery}`);
             if (!response.ok) {
                 const errorData = await response.json();
                 setError(errorData);

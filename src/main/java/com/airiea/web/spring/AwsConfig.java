@@ -1,7 +1,9 @@
 package com.airiea.web.spring;
 
+import com.airiea.dao.AbilityDao;
 import com.airiea.dao.AgentDao;
 import com.airiea.dao.TaskDao;
+import com.airiea.dao.impl.AbilityDaoImpl;
 import com.airiea.dao.impl.AgentDaoImpl;
 import com.airiea.dao.impl.TaskDaoImpl;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -26,6 +28,11 @@ public class AwsConfig {
     @Bean(name = "AgentDao")
     public AgentDao getAgentDao() {
         return new AgentDaoImpl(getDynamoDBMapper());
+    }
+
+    @Bean(name = "AbilityDao")
+    public AbilityDao getAbilityDao() {
+        return new AbilityDaoImpl(getDynamoDBMapper());
     }
 
     @Bean(name = "DynamoDBMapper")

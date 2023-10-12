@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios, {post} from 'axios';
+import axios from 'axios';
 import NavBar from "../common/NavBar";
 import { Button, Form, FormGroup, Label, Input, Container, ListGroup, ListGroupItem } from 'reactstrap';
 
@@ -11,7 +11,7 @@ const AgentManager = () => {
     useEffect(() => {
         const fetchAgents = async () => {
             try {
-                const response = await fetch('/agent-manager/list-all');
+                const response = await axios.get('/agent-manager/list-all');
                 setAgents(response.data);
             } catch (error) {
                 console.error("Error fetching agents:", error);

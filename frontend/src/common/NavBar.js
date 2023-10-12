@@ -30,21 +30,10 @@ export default class NavBar extends Component {
         return (
             <div>
                 <Navbar color="dark" dark expand="md">
-                    <NavbarBrand href="/">Airiea</NavbarBrand>
+                    <NavbarBrand href="/">Home</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state} navbar>
                         <Nav className="me-auto" navbar>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Agent
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem href="/agent-search">Agent Search</DropdownItem>
-                                    <DropdownItem href="/agent-manager">Agent Manager</DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem>Reset</DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
                                     Task
@@ -52,6 +41,26 @@ export default class NavBar extends Component {
                                 <DropdownMenu right>
                                     <DropdownItem href="/task-search">Task Search</DropdownItem>
                                     <DropdownItem href="/task-planning">Task Planning</DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>Reset</DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret>
+                                    Agent
+                                </DropdownToggle>
+                                <DropdownMenu right>
+                                    <DropdownItem href="/agent-manager">Agent Manager</DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>Reset</DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret>
+                                    Ability
+                                </DropdownToggle>
+                                <DropdownMenu right>
+                                    <DropdownItem href="/ability-manager">Ability Manager</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>

@@ -1,15 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import {
-    Container,
-    Row,
-    Col,
-    Input,
-    Button,
-    FormGroup,
-    Label,
-    Form
-} from 'reactstrap';
+import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 import NavBar from "../common/NavBar";
 
 const CreateAbility = () => {

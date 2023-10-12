@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NavBar from "../common/NavBar";
-import { Button, Form, FormGroup, Label, Input, Container, ListGroup, ListGroupItem } from 'reactstrap';
+import {Button, Container, FormGroup, Input, Label, ListGroup, ListGroupItem} from 'reactstrap';
 
 const AgentManager = () => {
     const [agents, setAgents] = useState([]);

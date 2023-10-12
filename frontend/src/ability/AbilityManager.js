@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Container, FormGroup, Label, Input, ListGroup, ListGroupItem, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {Button, Container, FormGroup, Input, Label, ListGroup, ListGroupItem} from 'reactstrap';
+import {Link} from 'react-router-dom';
 import NavBar from "../common/NavBar";
 
 const AbilityManager = () => {

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import NavBar from "../common/NavBar";
-import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
+import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 
 const AgentCreate = () => {
     const [agentName, setAgentName] = useState('');

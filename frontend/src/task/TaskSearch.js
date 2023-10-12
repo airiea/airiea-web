@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import NavBar from "../common/NavBar";
 import TaskSortAndPaginate from "./TaskSortAndPaginate";
-import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
+import {Alert, Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 
 const TaskSearch = () => {
     const [searchQuery, setSearchQuery] = useState('');

@@ -1,7 +1,6 @@
 package com.airiea.web.controller.ability;
 
 import com.airiea.model.resource.Ability;
-import com.airiea.model.resource.Agent;
 import com.airiea.web.service.AbilityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

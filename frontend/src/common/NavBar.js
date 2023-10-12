@@ -1,16 +1,15 @@
-
 import React, {Component} from 'react';
 import {
     Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
     DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Nav,
+    Navbar,
+    NavbarBrand,
     NavbarText,
+    NavbarToggler,
+    UncontrolledDropdown,
 } from 'reactstrap';
 
 export default class NavBar extends Component {

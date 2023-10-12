@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'reactstrap';
+import {Table} from 'reactstrap';
 
 function TaskList({ taskList }) {
     if (!taskList || taskList.length === 0) {

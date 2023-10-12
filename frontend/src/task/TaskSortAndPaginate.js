@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Button,
+    ButtonGroup,
     Dropdown,
-    DropdownToggle,
-    DropdownMenu,
     DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
     Pagination,
     PaginationItem,
-    PaginationLink,
-    ButtonGroup
+    PaginationLink
 } from 'reactstrap';
 import TaskList from "./TaskList";
 

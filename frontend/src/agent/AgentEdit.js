@@ -8,7 +8,7 @@ const AgentEdit = ({ match }) => {
     useEffect(() => {
         const fetchAgent = async () => {
             try {
-                const response = await axios.get(`/api/agent/${match.params.agentName}`); // Adjust this endpoint as per your backend
+                const response = await axios.get(`/agent-manager/${match.params.agent_name}`); // Adjust this endpoint as per your backend
                 setAgent(response.data);
             } catch (error) {
                 console.error("Error fetching agent:", error);
@@ -16,11 +16,11 @@ const AgentEdit = ({ match }) => {
         };
 
         fetchAgent();
-    }, [match.params.agentName]);
+    }, [match.params.agent_name]);
 
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`/api/agent/update/${match.params.agentName}`, updatedData);
+            const response = await axios.put(`/agent_manager/edit/${match.params.agent_name}`, updatedData);
             console.log("Agent updated:", response.data);
         } catch (error) {
             console.error("Error updating agent:", error);

@@ -1,7 +1,15 @@
-// TaskSortAndPaginate.js
-
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+    Button,
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Pagination,
+    PaginationItem,
+    PaginationLink,
+    ButtonGroup
+} from 'reactstrap';
 import TaskList from "./TaskList";
 
 function TaskSortAndPaginate({ taskList, pageSize }) {
@@ -21,18 +29,18 @@ function TaskSortAndPaginate({ taskList, pageSize }) {
         return sortOrder === 'asc' ? comparison : -comparison;
     });
 
+    const total_pages = Math.ceil(sortedTaskList.length / pageSize);
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const taskListOnPage = sortedTaskList.slice(startIndex, endIndex);
 
     return (
-        <div className="sort-and-paginate">
-            <div className="sorting-controls">
+        <div className="sort-and-paginate mt-4">
+            <div className="mb-3 d-flex align-items-center justify-content-between">
                 <ButtonGroup>
-                    <Button onClick={toggleSortOrder}>Toggle Sort Order ({sortOrder})</Button>
                     <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
                         <DropdownToggle caret>
-                            Sort By
+                            Sort By: {sortKey || "Choose..."}
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem onClick={() => setSortKey('entity_id')}>Entity ID</DropdownItem>
@@ -42,26 +50,34 @@ function TaskSortAndPaginate({ taskList, pageSize }) {
                             <DropdownItem onClick={() => setSortKey('updated_date')}>Updated Date</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
+                    <Button onClick={toggleSortOrder}>
+                        Sort: {sortOrder === 'asc' ? "Ascending" : "Descending"}
+                    </Button>
                 </ButtonGroup>
             </div>
+
             <TaskList taskList={taskListOnPage} />
-            <div className="pagination-controls">
-                <Button
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                >
-                    Previous Page
-                </Button>
-                <span>Page {currentPage}</span>
-                <Button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={endIndex >= sortedTaskList.length}
-                >
-                    Next Page
-                </Button>
+
+            <div className="mt-4 d-flex justify-content-center">
+                <Pagination>
+                    <PaginationItem disabled={currentPage === 1}>
+                        <PaginationLink previous onClick={() => setCurrentPage(currentPage - 1)} />
+                    </PaginationItem>
+                    {[...Array(total_pages)].map((_, i) => (
+                        <PaginationItem active={i + 1 === currentPage} key={i}>
+                            <PaginationLink onClick={() => setCurrentPage(i + 1)}>
+                                {i + 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    ))}
+                    <PaginationItem disabled={endIndex >= sortedTaskList.length}>
+                        <PaginationLink next onClick={() => setCurrentPage(currentPage + 1)} />
+                    </PaginationItem>
+                </Pagination>
             </div>
         </div>
     );
 }
 
 export default TaskSortAndPaginate;
+

@@ -1,106 +1,90 @@
+import React, { useState, useEffect } from "react";
 import NavBar from "../common/NavBar";
-import React, {Component} from "react";
-import JsonObjectViewer from "../common/JsonObjectViewer";
 import TaskSortAndPaginate from "./TaskSortAndPaginate";
-import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 
+const TaskSearch = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchType, setSearchType] = useState('task_id');
+    const [taskList, setTaskList] = useState(null);
+    const [error, setError] = useState(null);
 
-class TaskSearch extends Component {
-    state = {
-        searchQuery: '', // For task details
-        searchType: 'task_id', // Default search type
-        taskList: null, // List of Task
-        error: null,
-    };
+    const searchTypeOptions = [
+        { value: 'task_id', label: 'Task ID' },
+        { value: 'entity_id', label: 'Entity ID' },
+        { value: 'agent_name', label: 'Agent Name' },
+        { value: 'status', label: 'Status' },
+        // Add more search types and labels as needed
+    ];
 
-    handleSearchChange = (event, field) => {
-        this.setState({ [field]: event.target.value });
-    };
-
-    handleSearchTypeChange = (event) => {
-        this.setState({ searchType: event.target.value });
-    };
-
-    handleSearchSubmit = async (event, field) => {
+    const handleSearchSubmit = async (event) => {
         event.preventDefault();
-        this.setState({ [field]: null, error: null });
+        setTaskList(null);
+        setError(null);
 
         try {
-            const response = await fetch(`/task-search/${this.state[field]}`);
+            const response = await fetch(`/task-search/${searchQuery}`);
             if (!response.ok) {
                 const errorData = await response.json();
-                this.setState({ error: errorData });
+                setError(errorData);
                 throw new Error(errorData);
             }
 
             const data = await response.json();
-            this.setState({ taskList: data });
-        } catch (error) {
-            console.error('Error searching for tasks:', error);
+            setTaskList(data);
+        } catch (err) {
+            console.error('Error searching for tasks:', err);
         }
     };
 
-    render() {
-        const { searchQuery, searchType, error, taskList } = this.state;
-
-        const searchTypeOptions = [
-            { value: 'task_id', label: 'Task ID' },
-            { value: 'entity_id', label: 'Entity ID' },
-            { value: 'agent_name', label: 'Agent Name' },
-            { value: 'status', label: 'Status' },
-            // Add more search types and labels as needed
-        ];
-
-        return (
+    return (
+        <div>
+            <NavBar />
             <Container>
-                <NavBar />
-                <Row>
-                    <Col sm="6">
-                        <Form onSubmit={(event) => this.handleSearchSubmit(event, 'searchQuery')}>
-                            <FormGroup>
-                                <Label for="searchQuery">Search by:</Label>
-                                <Input
-                                    type="select"
-                                    name="searchType"
-                                    id="searchType"
-                                    value={searchType}
-                                    onChange={this.handleSearchTypeChange}
-                                >
-                                    {searchTypeOptions.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </Input>
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                    type="text"
-                                    id="searchQuery"
-                                    placeholder={`Enter ${searchTypeOptions.find((option) => option.value === searchType)?.label || 'Task ID'}`}
-                                    value={searchQuery}
-                                    onChange={(event) => this.handleSearchChange(event, 'searchQuery')}
-                                />
-                            </FormGroup>
-                            <Button type="submit">Search</Button>
-                        </Form>
-                    </Col>
-                </Row>
+                <h3 className="my-4">Task Search</h3>
+
+                <Form onSubmit={handleSearchSubmit} className="mb-4">
+                    <FormGroup>
+                        <Label for="searchType">Search by:</Label>
+                        <Input
+                            type="select"
+                            name="searchType"
+                            id="searchType"
+                            value={searchType}
+                            onChange={(e) => setSearchType(e.target.value)}
+                        >
+                            {searchTypeOptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </Input>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="searchQuery">Enter Details:</Label>
+                        <Input
+                            type="text"
+                            id="searchQuery"
+                            placeholder={`Enter ${searchTypeOptions.find((option) => option.value === searchType)?.label || 'Task ID'}`}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </FormGroup>
+                    <Button color="primary">Search</Button>
+                </Form>
+
                 {error ? (
-                    <Row>
-                        <Col>
-                            <JsonObjectViewer jsonObject={error} />
-                        </Col>
-                    </Row>
-                ) : taskList ? (
-                    <Row>
-                        <Col>
-                            <TaskSortAndPaginate taskList={taskList} pageSize={200} />
-                        </Col>
-                    </Row>
+                    <Alert color="danger" className="mt-3">
+                        An error occurred. Please check your input and try again.
+                    </Alert>
+                ) : null}
+
+                {taskList ? (
+                    <TaskSortAndPaginate taskList={taskList} pageSize={200} />
                 ) : null}
             </Container>
-        );
-    }
-}
+        </div>
+    );
+};
+
 export default TaskSearch;

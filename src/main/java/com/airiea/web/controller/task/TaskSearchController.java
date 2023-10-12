@@ -19,7 +19,7 @@ public class TaskSearchController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/task_id/{id}")
     public List<Task> getTaskById(@PathVariable String id) {
         return Collections.singletonList(taskService.getTaskById(id));
     }

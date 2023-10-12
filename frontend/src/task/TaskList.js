@@ -7,8 +7,9 @@ function TaskList({ taskList }) {
     }
 
     return (
-        <div className="task-list">
+        <div className="task-list mt-4">
             <Table striped bordered responsive>
+                <caption>List of Tasks</caption>
                 <thead>
                 <tr>
                     <th>Task ID</th>
@@ -25,8 +26,8 @@ function TaskList({ taskList }) {
                 </tr>
                 </thead>
                 <tbody>
-                {taskList.map((task, index) => (
-                    <tr key={index}>
+                {taskList.map((task) => (
+                    <tr key={task.task_id}>
                         <td>{task.task_id}</td>
                         <td>{task.entity_id}</td>
                         <td>{task.agent_name}</td>

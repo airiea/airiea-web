@@ -39,8 +39,8 @@ export default class NavBar extends Component {
                                     Agent
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem href="/agent-search">Task Search</DropdownItem>
-                                    <DropdownItem href="/agent-manager">Task Manager</DropdownItem>
+                                    <DropdownItem href="/agent-search">Agent Search</DropdownItem>
+                                    <DropdownItem href="/agent-manager">Agent Manager</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>

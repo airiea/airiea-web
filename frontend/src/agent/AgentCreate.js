@@ -1,29 +1,30 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import NavBar from "../common/NavBar";
-import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import { Button, Container, Form, FormGroup, Input, Label, Row, Col, Alert } from 'reactstrap';
 
 const AgentCreate = () => {
-    const [agentName, setAgentName] = useState('');
-    const [agentRole, setAgentRole] = useState('');
-    const [agentGoal, setAgentGoal] = useState('');
-    const [abilityName, setAbilityName] = useState('');
+    const [agentData, setAgentData] = useState({
+        agent_name: '',
+        agent_role: '',
+        agent_goal: '',
+        ability_name: ''
+    });
+    const [feedback, setFeedback] = useState({ message: '', type: '' }); // for success or error feedback
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setAgentData(prev => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const agentData = {
-            agent_name: agentName,
-            agent_role: agentRole,
-            agent_goal: agentGoal,
-            ability_name: abilityName,
-        };
-
         try {
-            const response = await axios.post('/agent-manager/create', agentData);
-            console.log("Agent created:", response.data);
+            await axios.post('/agent-manager/create', agentData);
+            setFeedback({ message: 'Agent created successfully!', type: 'success' });
         } catch (error) {
-            console.error("Error creating agent:", error);
+            setFeedback({ message: 'Error creating agent. Please try again.', type: 'danger' });
         }
     };
 
@@ -31,45 +32,42 @@ const AgentCreate = () => {
         <div>
             <NavBar />
             <Container>
-                <h2 className="my-4">Create New Agent</h2>
+                <Row className="mb-4">
+                    <Col>
+                        <h2>Create New Agent</h2>
+                    </Col>
+                </Row>
                 <Form onSubmit={handleSubmit}>
-                    <FormGroup>
-                        <Label for="agentName">Agent Name:</Label>
-                        <Input
-                            type="text"
-                            id="agentName"
-                            value={agentName}
-                            onChange={(e) => setAgentName(e.target.value)}
-                        />
+                    {Object.keys(agentData).map((key, index) => (
+                        <FormGroup row key={index}>
+                            <Label for={key} sm={2}>
+                                {key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                            </Label>
+                            <Col sm={10}>
+                                <Input
+                                    type="textarea"
+                                    id={key}
+                                    name={key}
+                                    value={agentData[key]}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                    ))}
+                    {feedback.message && (
+                        <FormGroup row>
+                            <Col sm={10}>
+                                <Alert color={feedback.type}>
+                                    {feedback.message}
+                                </Alert>
+                            </Col>
+                        </FormGroup>
+                    )}
+                    <FormGroup row>
+                        <Col sm={10}>
+                            <Button color="primary" type="submit">Create Agent</Button>
+                        </Col>
                     </FormGroup>
-                    <FormGroup>
-                        <Label for="agentRole">Agent Role:</Label>
-                        <Input
-                            type="text"
-                            id="agentRole"
-                            value={agentRole}
-                            onChange={(e) => setAgentRole(e.target.value)}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="agentGoal">Agent Goal:</Label>
-                        <Input
-                            type="text"
-                            id="agentGoal"
-                            value={agentGoal}
-                            onChange={(e) => setAgentGoal(e.target.value)}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="abilityName">Ability Name:</Label>
-                        <Input
-                            type="text"
-                            id="abilityName"
-                            value={abilityName}
-                            onChange={(e) => setAbilityName(e.target.value)}
-                        />
-                    </FormGroup>
-                    <Button color="primary" type="submit">Create Agent</Button>
                 </Form>
             </Container>
         </div>
@@ -77,3 +75,5 @@ const AgentCreate = () => {
 };
 
 export default AgentCreate;
+
+

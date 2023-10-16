@@ -1,6 +1,8 @@
 package com.airiea.web.service.impl;
 
 import com.airiea.dao.AgentDao;
+import com.airiea.dao.orm.AbilityConfig;
+import com.airiea.dao.orm.AgentConfig;
 import com.airiea.model.resource.Agent;
 import com.airiea.web.service.AgentService;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,15 @@ public class AgentServiceImpl implements AgentService {
         this.agentDao = agentDao;
     }
 
+    @Override
+    public void createAgent(Agent agent) {
+        agentDao.createAgent(agent);
+    }
+
+    @Override
+    public void updateAgent(Agent agent) {
+        agentDao.updateAgent(agent);
+    }
 
     @Override
     public Agent getAgentByName(String agentName) {
@@ -28,12 +39,8 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public void createAgent(Agent agent) {
-        agentDao.createAgent(agent);
-    }
-
-    @Override
     public List<Agent> getAllAgents() {
         return agentDao.getAllAgents();
     }
+
 }

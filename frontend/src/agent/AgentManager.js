@@ -43,7 +43,7 @@ const AgentManager = () => {
                         .filter(agent => agent.agent_name.includes(searchTerm))
                         .map(agent => (
                             <ListGroupItem key={agent.agent_name}>
-                                <Link to={`/agent-edit/${agent.agent_name}`}>{agent.agent_name}</Link>
+                                <Link to={`/agent-manager/${agent.agent_name}`}>{agent.agent_name}</Link>
                             </ListGroupItem>
                         ))}
                 </ListGroup>

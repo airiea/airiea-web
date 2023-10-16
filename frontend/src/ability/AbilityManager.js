@@ -14,7 +14,7 @@ const AbilityManager = () => {
                 const response = await axios.get('/ability-manager/list-all');
                 setAbilities(response.data);
             } catch (error) {
-                console.error("Error fetching abilities:", error);
+                console.error("Error fetching abilities: ", error);
             }
         };
 
@@ -40,10 +40,10 @@ const AbilityManager = () => {
 
                 <ListGroup>
                     {abilities
-                        .filter(ability => ability.abilityName.includes(searchTerm))
+                        .filter(ability => ability.ability_name.includes(searchTerm))
                         .map(ability => (
-                            <ListGroupItem key={ability.abilityName}>
-                                <Link to={`/ability-edit/${ability.abilityName}`}>{ability.abilityName}</Link>
+                            <ListGroupItem key={ability.ability_name}>
+                                <Link to={`/ability-manager/${ability.ability_name}`}>{ability.ability_name}</Link>
                             </ListGroupItem>
                         ))}
                 </ListGroup>

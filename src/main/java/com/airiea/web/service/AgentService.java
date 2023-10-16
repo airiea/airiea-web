@@ -6,7 +6,8 @@ import com.airiea.model.resource.Agent;
 import java.util.List;
 
 public interface AgentService {
-    Agent getAgentByName(String agentName);
+    void updateAgent(Agent agent);
     void createAgent(Agent agent);
+    Agent getAgentByName(String agentName);
     List<Agent> getAllAgents();
 }

@@ -12,7 +12,7 @@ const AbilityEdit = () => {
     const [ability, setAbility] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const editableFields = ["description", "response_requirement", "example_input", "example_output"];
+    const editableFields = ["description", "response_requirement", "example_input", "example_output", "prompt_format"];
 
     useEffect(() => {
         const fetchAbility = async () => {

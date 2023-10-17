@@ -5,9 +5,10 @@ import axios from 'axios';
 import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 
 import NavBar from "../common/NavBar";
+import {useParams} from "react-router-dom";
 
-const AbilityEdit = ({ match }) => {
-    const { ability_name } = match.params;
+const AbilityEdit = () => {
+    const { ability_name } = useParams();
     const [ability, setAbility] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

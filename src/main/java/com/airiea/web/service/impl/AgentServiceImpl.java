@@ -1,8 +1,6 @@
 package com.airiea.web.service.impl;
 
 import com.airiea.dao.AgentDao;
-import com.airiea.dao.orm.AbilityConfig;
-import com.airiea.dao.orm.AgentConfig;
 import com.airiea.model.resource.Agent;
 import com.airiea.web.service.AgentService;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
 
 const AgentEdit = () => {
-    const { agentName } = useParams();
+    const { agent_name } = useParams();
     const navigate = useNavigate();
     const [agent, setAgent] = useState(null);
     const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ const AgentEdit = () => {
     useEffect(() => {
         const fetchAgent = async () => {
             try {
-                const response = await axios.get(`/agent-manager/${agentName}`);
+                const response = await axios.get(`/agent-manager/${agent_name}`);
                 setAgent(response.data);
                 setFormData({
                     agent_name: response.data.agent_name,
@@ -32,7 +32,7 @@ const AgentEdit = () => {
         };
 
         fetchAgent();
-    }, [agentName]);
+    }, [agent_name]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,7 +58,7 @@ const AgentEdit = () => {
         <div>
             <NavBar />
             <Container>
-                <h2 className="my-4">Edit Agent: {agentName}</h2>
+                <h2 className="my-4">Edit Agent: {agent_name}</h2>
                 {agent ? (
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>

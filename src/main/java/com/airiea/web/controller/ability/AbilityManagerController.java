@@ -1,12 +1,11 @@
 package com.airiea.web.controller.ability;
 
 import com.airiea.model.resource.Ability;
-import com.airiea.model.resource.Task;
+import com.airiea.model.resource.Agent;
 import com.airiea.web.service.AbilityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,6 +27,12 @@ public class AbilityManagerController {
     @GetMapping("/{name}")
     public Ability getAbilityByName(@PathVariable String name) {
         return abilityService.getAbilityByName(name);
+    }
+
+    @PutMapping("/edit/{name}")
+    public ResponseEntity<String> updateAbility(@RequestBody Ability ability) {
+        abilityService.updateAbility(ability);
+        return ResponseEntity.ok("Ability updated successfully!");
     }
 
     @GetMapping("/list-all")

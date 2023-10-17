@@ -28,6 +28,11 @@ public class AbilityServiceImpl implements AbilityService {
     }
 
     @Override
+    public void updateAbility(Ability ability) {
+        abilityDao.updateAbility(ability);
+    }
+
+    @Override
     public void createAbility(Ability ability) {
         abilityDao.createAbility(ability);
     }

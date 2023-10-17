@@ -6,14 +6,16 @@ import NavBar from "../common/NavBar";
 const AbilityCreate = () => {
     const [ability, setAbility] = useState({
         ability_name: '',
-        model_object: '',
         model: '',
+        model_object: '',
         max_tokens: null,
         temperature: null,
         description: '',
         response_requirement: '',
+        response_delimiter: '',
         example_input: '',
         example_output: '',
+        prompt_format: '',
         update_type: '',
         update_delimiter: ''
     });
@@ -22,10 +24,11 @@ const AbilityCreate = () => {
         "embedding": ["text-embedding-ada-002"],
         "chat.completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
         "completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
-        "answer.question": ["gpt-3.5-turbo", "gpt-4"]
+        "answer.question": ["gpt-3.5-turbo", "gpt-4"],
+        "knowledge.content.enrichment": [null],
     };
 
-    const modelObjectsList = ["embedding", "chat.completion", "completion", "answer.question"];
+    const modelObjectsList = ["embedding", "chat.completion", "completion", "answer.question", "knowledge.content.enrichment"];
     const updateTypeList = [null, "incremental_update", "complete_update"];
 
     const modelsList = allModelsList[ability.model_object] || [];
@@ -45,9 +48,12 @@ const AbilityCreate = () => {
 
     const renderField = (key) => {
         const label = key.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+        const isChatOrCompletion = ['chat.completion', 'completion'].includes(ability.model_object);
+
         switch (key) {
             case "ability_name":
-                return <Input type="text" name={key} value={ability[key]} onChange={handleChange} />;
+            case "response_delimiter":
+                return <Input type="text" name={key} value={ability[key]} onChange={handleChange} disabled={!isChatOrCompletion} />;
             case "model_object":
             case "model":
             case "update_type":
@@ -62,16 +68,17 @@ const AbilityCreate = () => {
                     </Input>
                 );
             case "max_tokens":
-                return <Input type="number" name={key} max={2048} min={20} value={ability[key]} onChange={handleChange} />;
             case "temperature":
-                return <Input type="number" name={key} max={1} min={0} step="0.01" value={ability[key]} onChange={handleChange} />;
-            case "description":
-            case "response_requirement":
+                return <Input type="number" name={key} max={key === "max_tokens" ? 2048 : 1} min={key === "max_tokens" ? 20 : 0} step={key === "temperature" ? "0.01" : undefined} value={ability[key]} onChange={handleChange} />;
             case "example_input":
             case "example_output":
                 return <Input type="textarea" name={key} value={ability[key]} onChange={handleChange} />;
             case "update_delimiter":
                 return <Input type="text" name={key} value={ability[key]} onChange={handleChange} disabled={ability.update_type !== "incremental_update"} />;
+            case "description":
+            case "response_requirement":
+            case "prompt_format":
+                return <Input type="textarea" name={key} value={ability[key]} onChange={handleChange} disabled={!isChatOrCompletion} />;
             default:
                 return <Input type="text" name={key} value={ability[key]} disabled onChange={handleChange} />;
         }

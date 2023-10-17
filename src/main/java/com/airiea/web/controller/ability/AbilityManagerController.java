@@ -19,6 +19,7 @@ public class AbilityManagerController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createAgent(@RequestBody Ability ability) {
+        System.out.println(ability);
         abilityService.createAbility(ability);
         return ResponseEntity.ok("Agent created successfully!");
     }

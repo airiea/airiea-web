@@ -6,8 +6,8 @@ import NavBar from "../common/NavBar";
 const AbilityCreate = () => {
     const [ability, setAbility] = useState({
         ability_name: '',
-        model: '',
-        model_object: '',
+        model: null,
+        model_object: null,
         max_tokens: null,
         temperature: null,
         description: '',
@@ -16,8 +16,8 @@ const AbilityCreate = () => {
         example_input: '',
         example_output: '',
         prompt_format: '',
-        update_type: '',
-        update_delimiter: ''
+        update_type: null,
+        update_delimiter: null
     });
 
     const allModelsList = {
@@ -25,7 +25,7 @@ const AbilityCreate = () => {
         "chat.completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
         "completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
         "answer.question": ["gpt-3.5-turbo", "gpt-4"],
-        "knowledge.content.enrichment": [null],
+        "knowledge.content.enrichment": ["gpt-3.5-turbo"]
     };
 
     const modelObjectsList = ["embedding", "chat.completion", "completion", "answer.question", "knowledge.content.enrichment"];
@@ -42,7 +42,7 @@ const AbilityCreate = () => {
             const response = await axios.post('/ability-manager/create', ability);
             alert(response.data);
         } catch (error) {
-            alert('Error creating agent!');
+            alert('Error creating ability!');
         }
     }
 
@@ -52,6 +52,7 @@ const AbilityCreate = () => {
 
         switch (key) {
             case "ability_name":
+                return <Input type="text" name={key} value={ability[key]} onChange={handleChange} />;
             case "response_delimiter":
                 return <Input type="text" name={key} value={ability[key]} onChange={handleChange} disabled={!isChatOrCompletion} />;
             case "model_object":

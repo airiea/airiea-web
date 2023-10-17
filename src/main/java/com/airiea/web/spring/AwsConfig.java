@@ -6,7 +6,8 @@ import com.airiea.dao.TaskDao;
 import com.airiea.dao.impl.AbilityDaoImpl;
 import com.airiea.dao.impl.AgentDaoImpl;
 import com.airiea.dao.impl.TaskDaoImpl;
-import com.airiea.dao.publisher.TaskInputPublisher;
+import com.airiea.dao.publisher.CreateTaskPlanEventPublisher;
+import com.airiea.dao.publisher.InputTaskEventPublisher;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -23,8 +24,10 @@ import org.springframework.context.annotation.Configuration;
 public class AwsConfig {
     private final static String BETA_ACCESS_KEY_ID = "AKIATILUKYWC6JBENZRC";
     private final static String  BETA_SECRET_ACCESS_KEY = "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";
-    private static final String TASK_INPUT_EVENT_SNS_TOPIC_ARN
-            = "arn:aws:sns:us-east-1:224119145861:task-input-event-topic-beta";
+    private static final String INPUT_TASK_EVENT_SNS_TOPIC_ARN
+            = "arn:aws:sns:us-east-1:224119145861:input-task-event-topic-beta";
+    private static final String CREATE_TASK_PLAN_EVENT_SNS_TOPIC_ARN
+            = "arn:aws:sns:us-east-1:224119145861:create-task-plan-event-topic-beta";
     @Bean(name = "TaskDao")
     public TaskDao getTaskDao() {
         return new TaskDaoImpl(getDynamoDBMapper());
@@ -40,9 +43,14 @@ public class AwsConfig {
         return new AbilityDaoImpl(getDynamoDBMapper());
     }
 
-    @Bean(name = "TaskInputPublisher")
-    public TaskInputPublisher getTaskInputPublisher() {
-        return new TaskInputPublisher(getAmazonSNS(), TASK_INPUT_EVENT_SNS_TOPIC_ARN);
+    @Bean(name = "InputTaskEventPublisher")
+    public InputTaskEventPublisher getInputTaskEventPublisher() {
+        return new InputTaskEventPublisher(getAmazonSNS(), INPUT_TASK_EVENT_SNS_TOPIC_ARN);
+    }
+
+    @Bean(name = "CreateTaskPlanEventPublisher")
+    public CreateTaskPlanEventPublisher getCreateTaskPlanEventPublisher() {
+        return new CreateTaskPlanEventPublisher(getAmazonSNS(), CREATE_TASK_PLAN_EVENT_SNS_TOPIC_ARN);
     }
 
     @Bean(name = "DynamoDBMapper")

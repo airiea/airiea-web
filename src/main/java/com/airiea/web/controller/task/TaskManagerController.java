@@ -1,6 +1,7 @@
 package com.airiea.web.controller.task;
 
-import com.airiea.model.event.TaskInputEvent;
+import com.airiea.model.event.CreateTaskPlanEvent;
+import com.airiea.model.event.InputTaskEvent;
 import com.airiea.web.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,16 @@ public class TaskManagerController {
         this.taskService = taskService;
     }
 
-    @PostMapping("/complete")
-    public ResponseEntity<String> completeTaskInput(@RequestBody TaskInputEvent taskInputEvent) {
-        taskService.completeTaskInput(taskInputEvent);
-        return ResponseEntity.ok("Started completing task event!");
+    @PostMapping("/input-task")
+    public ResponseEntity<String> inputTask(@RequestBody InputTaskEvent inputTaskEvent) {
+        taskService.publishInputTaskEvent(inputTaskEvent);
+        return ResponseEntity.ok("Started inputting task event!");
     }
+
+    @PostMapping("/task-plan/create")
+    public ResponseEntity<String> createTaskPlan(@RequestBody CreateTaskPlanEvent createTaskPlanEvent) {
+        taskService.publishCreateTaskPlanEvent(createTaskPlanEvent);
+        return ResponseEntity.ok("Started creating task plan!");
+    }
+
 }

@@ -1,8 +1,10 @@
 package com.airiea.web.service.impl;
 
 import com.airiea.dao.TaskDao;
-import com.airiea.dao.publisher.TaskInputPublisher;
-import com.airiea.model.event.TaskInputEvent;
+import com.airiea.dao.publisher.CreateTaskPlanEventPublisher;
+import com.airiea.dao.publisher.InputTaskEventPublisher;
+import com.airiea.model.event.CreateTaskPlanEvent;
+import com.airiea.model.event.InputTaskEvent;
 import com.airiea.model.resource.Task;
 import com.airiea.web.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,19 @@ import javax.inject.Named;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskDao taskDao;
-    private final TaskInputPublisher taskInputPublisher;
+
+    private final InputTaskEventPublisher inputTaskEventPublisher;
+    private final CreateTaskPlanEventPublisher createTaskPlanEventPublisher;
 
     @Inject
     public TaskServiceImpl(
             @Named("TaskDao") TaskDao taskDao,
-            @Named("TaskInputPublisher") TaskInputPublisher taskInputPublisher) {
+            @Named("InputTaskEventPublisher") InputTaskEventPublisher InputTaskEventPublisher,
+            @Named("CreateTaskPlanEventPublisher") CreateTaskPlanEventPublisher createTaskPlanEventPublisher) {
         this.taskDao = taskDao;
-        this.taskInputPublisher = taskInputPublisher;
+
+        this.inputTaskEventPublisher = InputTaskEventPublisher;
+        this.createTaskPlanEventPublisher = createTaskPlanEventPublisher;
     }
 
 
@@ -32,7 +39,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void completeTaskInput(TaskInputEvent taskInputEvent) {
-        taskInputPublisher.sendTaskInputEventToSnsTopic(taskInputEvent);
+    public void publishInputTaskEvent(InputTaskEvent InputTaskEvent) {
+        inputTaskEventPublisher.sendInputTaskEventToSnsTopic(InputTaskEvent);
     }
+
+    @Override
+    public void publishCreateTaskPlanEvent(CreateTaskPlanEvent createTaskPlanEvent) {
+        createTaskPlanEventPublisher.sendTaskPlanEventToSnsTopic(createTaskPlanEvent);
+    }
+
 }

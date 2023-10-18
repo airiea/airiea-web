@@ -25,7 +25,7 @@ const AbilityCreate = () => {
         "chat.completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
         "completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
         "answer.question": ["gpt-3.5-turbo", "gpt-4"],
-        "knowledge.content.enrichment": ["gpt-3.5-turbo"]
+        "knowledge.content.enrichment": []
     };
 
     const modelObjectsList = ["embedding", "chat.completion", "completion", "answer.question", "knowledge.content.enrichment"];

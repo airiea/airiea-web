@@ -38,8 +38,7 @@ export default class NavBar extends Component {
                                     Task
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem href="/task-search">Task Search</DropdownItem>
-                                    <DropdownItem href="/task-planning">Task Planning</DropdownItem>
+                                    <DropdownItem href="/task-manager">Task Manager</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>

@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NavBar from "../common/NavBar";
-import {Button, Container, FormGroup, Input, Label, ListGroup, ListGroupItem} from 'reactstrap';
+import {Button, Container, FormGroup, Input, Label, ListGroupItem} from 'reactstrap';
+import SortAndPaginate from "../common/SortAndPaginate";
+
 
 const AgentManager = () => {
     const [agents, setAgents] = useState([]);
@@ -38,15 +40,16 @@ const AgentManager = () => {
                     />
                 </FormGroup>
 
-                <ListGroup>
-                    {agents
-                        .filter(agent => agent.agent_name.includes(searchTerm))
-                        .map(agent => (
-                            <ListGroupItem key={agent.agent_name}>
-                                <Link to={`/agent-manager/${agent.agent_name}`}>{agent.agent_name}</Link>
-                            </ListGroupItem>
-                        ))}
-                </ListGroup>
+                <SortAndPaginate
+                    dataList={agents.filter(agent => agent.agent_name.includes(searchTerm))}
+                    pageSize={10}
+                    sortFields={['agent_name']}
+                    renderItem={(agent) => (
+                        <ListGroupItem key={agent.agent_name}>
+                            <Link to={`/agent-manager/${agent.agent_name}`}>{agent.agent_name}</Link>
+                        </ListGroupItem>
+                    )}
+                />
 
                 <Link to="/agent-manager/create">
                     <Button color="primary" className="mt-4">Create New Agent</Button>

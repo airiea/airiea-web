@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Button, Container, FormGroup, Input, Label, ListGroup, ListGroupItem} from 'reactstrap';
+import {Button, Container, FormGroup, Input, Label, ListGroupItem} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import NavBar from "../common/NavBar";
+import SortAndPaginate from "../common/SortAndPaginate";
 
 const AbilityManager = () => {
     const [abilities, setAbilities] = useState([]);
@@ -21,13 +22,15 @@ const AbilityManager = () => {
         fetchAbilities();
     }, []);
 
+    const filteredAbilities = abilities.filter(ability => ability.ability_name.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
         <div>
             <NavBar />
             <Container>
                 <h2 className="my-4">Ability Manager</h2>
 
-                <FormGroup>
+                <FormGroup className="mb-4">
                     <Label for="searchAbility">Search Abilities:</Label>
                     <Input
                         type="text"
@@ -38,19 +41,22 @@ const AbilityManager = () => {
                     />
                 </FormGroup>
 
-                <ListGroup>
-                    {abilities
-                        .filter(ability => ability.ability_name.includes(searchTerm))
-                        .map(ability => (
-                            <ListGroupItem key={ability.ability_name}>
-                                <Link to={`/ability-manager/${ability.ability_name}`}>{ability.ability_name}</Link>
-                            </ListGroupItem>
-                        ))}
-                </ListGroup>
+                <SortAndPaginate
+                    dataList={filteredAbilities}
+                    pageSize={10}
+                    sortFields={['ability_name']}
+                    renderItem={(ability) => (
+                        <ListGroupItem key={ability.ability_name}>
+                            <Link to={`/ability-manager/${ability.ability_name}`}>{ability.ability_name}</Link>
+                        </ListGroupItem>
+                    )}
+                />
 
-                <Link to="/ability-manager/create">
-                    <Button color="primary" className="mt-4">Create New Ability</Button>
-                </Link>
+                <div className="mt-4">
+                    <Link to="/ability-manager/create">
+                        <Button color="primary">Create New Ability</Button>
+                    </Link>
+                </div>
             </Container>
         </div>
     );

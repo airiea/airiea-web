@@ -10,9 +10,8 @@ import {
     PaginationItem,
     PaginationLink
 } from 'reactstrap';
-import TaskList from "./TaskList";
 
-function TaskSortAndPaginate({ taskList, pageSize }) {
+function SortAndPaginate({ dataList, pageSize, sortFields, renderItem }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [sortKey, setSortKey] = useState(null);
     const [sortOrder, setSortOrder] = useState('asc');
@@ -22,43 +21,45 @@ function TaskSortAndPaginate({ taskList, pageSize }) {
         setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     };
 
-    const sortedTaskList = taskList.slice().sort((a, b) => {
+    const sortedDataList = dataList.slice().sort((a, b) => {
         if (!sortKey) return 0;
 
         const comparison = a[sortKey].localeCompare(b[sortKey]);
         return sortOrder === 'asc' ? comparison : -comparison;
     });
 
-    const total_pages = Math.ceil(sortedTaskList.length / pageSize);
+    const total_pages = Math.ceil(sortedDataList.length / pageSize);
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const taskListOnPage = sortedTaskList.slice(startIndex, endIndex);
+    const dataListOnPage = sortedDataList.slice(startIndex, endIndex);
 
     return (
         <div className="sort-and-paginate mt-4">
-            <div className="mb-3 d-flex align-items-center justify-content-between">
+            <div className="mb-4 d-flex align-items-center justify-content-start">
                 <ButtonGroup>
                     <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
-                        <DropdownToggle caret>
+                        <DropdownToggle caret className="mr-2">
                             Sort By: {sortKey || "Choose..."}
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem onClick={() => setSortKey('entity_id')}>Entity ID</DropdownItem>
-                            <DropdownItem onClick={() => setSortKey('agent_name')}>Agent Name</DropdownItem>
-                            <DropdownItem onClick={() => setSortKey('task_count')}>Task Count</DropdownItem>
-                            <DropdownItem onClick={() => setSortKey('created_date')}>Created Date</DropdownItem>
-                            <DropdownItem onClick={() => setSortKey('updated_date')}>Updated Date</DropdownItem>
+                            {sortFields.map(field => (
+                                <DropdownItem key={field} onClick={() => setSortKey(field)}>
+                                    {field.replace(/_/g, ' ').charAt(0).toUpperCase() + field.slice(1)}
+                                </DropdownItem>
+                            ))}
                         </DropdownMenu>
                     </Dropdown>
-                    <Button onClick={toggleSortOrder}>
-                        Sort: {sortOrder === 'asc' ? "Ascending" : "Descending"}
+                    <Button color={sortOrder === 'asc' ? 'success' : 'info'} onClick={toggleSortOrder}>
+                        {sortOrder === 'asc' ? "Ascending" : "Descending"}
                     </Button>
                 </ButtonGroup>
             </div>
 
-            <TaskList taskList={taskListOnPage} />
+            <div className="mb-4">
+                {dataListOnPage.map(item => renderItem(item))}
+            </div>
 
-            <div className="mt-4 d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
                 <Pagination>
                     <PaginationItem disabled={currentPage === 1}>
                         <PaginationLink previous onClick={() => setCurrentPage(currentPage - 1)} />
@@ -70,7 +71,7 @@ function TaskSortAndPaginate({ taskList, pageSize }) {
                             </PaginationLink>
                         </PaginationItem>
                     ))}
-                    <PaginationItem disabled={endIndex >= sortedTaskList.length}>
+                    <PaginationItem disabled={endIndex >= sortedDataList.length}>
                         <PaginationLink next onClick={() => setCurrentPage(currentPage + 1)} />
                     </PaginationItem>
                 </Pagination>
@@ -79,5 +80,6 @@ function TaskSortAndPaginate({ taskList, pageSize }) {
     );
 }
 
-export default TaskSortAndPaginate;
+export default SortAndPaginate;
+
 

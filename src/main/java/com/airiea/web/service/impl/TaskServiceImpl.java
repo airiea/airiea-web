@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 
 @Service
@@ -39,8 +40,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void publishInputTaskEvent(InputTaskEvent InputTaskEvent) {
-        inputTaskEventPublisher.sendInputTaskEventToSnsTopic(InputTaskEvent);
+    public List<Task> getTaskListByEntityId(String entityId) {
+        return taskDao.getTaskListByEntityId(entityId);
+    }
+
+    @Override
+    public void publishInputTaskEvent(InputTaskEvent inputTaskEvent) {
+        inputTaskEventPublisher.sendInputTaskEventToSnsTopic(inputTaskEvent);
     }
 
     @Override

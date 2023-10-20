@@ -11,21 +11,21 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/task-manager")
-public class TaskManagerController {
+@RequestMapping("/task")
+public class TaskController {
 
     private final TaskService taskService;
 
-    public TaskManagerController(TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public Task getTaskById(@PathVariable String id) {
         return taskService.getTaskById(id);
     }
 
-    @GetMapping("/entity_id/{id}")
+    @GetMapping("/search/entity_id/{id}")
     public List<Task> getTaskListByEntityId(@PathVariable String id) {
         return taskService.getTaskListByEntityId(id);
     }

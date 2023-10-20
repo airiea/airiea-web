@@ -18,11 +18,11 @@ const TaskInput = () => {
 
     const validateFormData = () => {
         if (['task_text_output', 'task_embedding_output'].includes(data.task_input_source) && !data.task_id) {
-            alert("Please provide a Task ID for the selected Task Input Source.");
+            alert("Please provide a TaskSearchById ID for the selected TaskSearchById Input Source.");
             return false;
         }
         if (['knowledge_entry_content', 'knowledge_entry_embedding'].includes(data.task_input_source) && !data.knowledge_id) {
-            alert("Please provide a Knowledge ID for the selected Task Input Source.");
+            alert("Please provide a KnowledgeSearchById ID for the selected TaskSearchById Input Source.");
             return false;
         }
         return true;
@@ -36,7 +36,7 @@ const TaskInput = () => {
         }
 
         try {
-            const response = await axios.post('/task-manager/input', data);
+            const response = await axios.post('/task/input', data);
             alert(response.data);
         } catch (error) {
             alert('Error inputting task event.');
@@ -47,6 +47,8 @@ const TaskInput = () => {
         <div>
             <NavBar />
             <Container>
+                <h2 className="my-4">Input Task</h2>
+
                 <Form onSubmit={handleSubmit}>
                     <FormGroup row>
                         <Label for="entity_id" sm={2}>Entity ID</Label>

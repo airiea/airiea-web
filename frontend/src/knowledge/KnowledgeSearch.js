@@ -1,42 +1,13 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
-import {Alert, Button, Container, Form, FormGroup, Input, Label, Table} from "reactstrap";
+import {Alert, Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
 import axios from "axios";
 import NavBar from "../common/NavBar";
+import KnowledgeTableView from "./KnowledgeTableView";
 
 const searchTypeOptions = [
-    { value: "knowledge_id", label: "knowledge ID" },
+    { value: "knowledge_id", label: "Knowledge ID" },
     { value: "agent_name", label: "Agent Name" },
 ];
-
-const KnowledgeTable = ({ knowledge }) => {
-    if (!knowledge) return null;
-
-    return (
-        <Table striped bordered responsive>
-            <thead>
-            <tr>
-                <th>Knowledge ID</th>
-                <th>Agent Name</th>
-                <th>Entity ID</th>
-                <th>Updated Date</th>
-                <th>Created Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {knowledge.map(knowledge => (
-                <tr key={knowledge.knowledge_id}>
-                    <td><Link to={`/knowledge/search/${knowledge.knowledge_id}`}>{knowledge.knowledge_id}</Link></td>
-                    <td>{knowledge.entity_id}</td>
-                    <td>{knowledge.agent_name}</td>
-                    <td>{knowledge.updated_date}</td>
-                    <td>{knowledge.created_date}</td>
-                </tr>
-            ))}
-            </tbody>
-        </Table>
-    );
-};
 
 const KnowledgeSearch = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -91,7 +62,7 @@ const KnowledgeSearch = () => {
                 </Form>
 
                 {error && <Alert color="danger" className="mt-3">{error}</Alert>}
-                {knowledgeData ? <KnowledgeTable knowledge={knowledgeData} /> : <p>No knowledge found.</p>}
+                {knowledgeData ? <KnowledgeTableView knowledge={knowledgeData} /> : <p>No knowledge found.</p>}
             </Container>
         </div>
     );

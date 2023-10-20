@@ -9,11 +9,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/knowledge/search")
-public class KnowledgeSearchController {
+public class KnowledgeController {
 
     private final KnowledgeService knowledgeService;
 
-    public KnowledgeSearchController(KnowledgeService knowledgeService) {
+    public KnowledgeController(KnowledgeService knowledgeService) {
         this.knowledgeService = knowledgeService;
     }
 

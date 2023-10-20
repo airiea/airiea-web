@@ -2,18 +2,20 @@ import './App.css';
 import React from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./Home";
-import TaskManager from "./task/TaskManager";
+import TaskSearch from "./task/TaskSearch";
 import TaskPlanCreate from "./task/TaskPlanCreate";
-import AgentManager from "./agent/AgentManager";
+import AgentSearch from "./agent/AgentSearch";
 import AgentCreate from "./agent/AgentCreate";
 import AgentEdit from "./agent/AgentEdit";
-import AbilityManager from "./ability/AbilityManager";
+import AbilitySearch from "./ability/AbilitySearch";
 import AbilityCreate from "./ability/AbilityCreate";
 import AbilityEdit from "./ability/AbilityEdit";
-import Task from "./task/Task";
+import TaskSearchById from "./task/TaskSearchById";
 import TaskInput from "./task/TaskInput";
 import KnowledgeSearch from "./knowledge/KnowledgeSearch";
-import Knowledge from "./knowledge/Knowledge";
+import KnowledgeSearchById from "./knowledge/KnowledgeSearchById";
+import AbilitySearchByName from "./ability/AbilitySearchByName";
+import AgentSearchByName from "./agent/AgentSearchByName";
 
 function App() {
     return (
@@ -22,20 +24,22 @@ function App() {
                 <Route path="/" element={<Home />} />
 
                 <Route path="/knowledge/search" element={<KnowledgeSearch />} />
-                <Route path="/knowledge/search/:knowledge_id" element={<Knowledge />} />
+                <Route path="/knowledge/search/:knowledge_id" element={<KnowledgeSearchById />} />
 
-                <Route path="/task-manager" element={<TaskManager />} />
-                <Route path="/task-manager/input" element={<TaskInput />} />
-                <Route path="/task-manager/plan/create" element={<TaskPlanCreate />} />
-                <Route path="/task-manager/:task_id" element={<Task />} />
+                <Route path="/task/search" element={<TaskSearch />} />
+                <Route path="/task/search/:task_id" element={<TaskSearchById />} />
+                <Route path="/task/input" element={<TaskInput />} />
+                <Route path="/task/plan/create" element={<TaskPlanCreate />} />
 
-                <Route path="/agent-manager" element={<AgentManager />} />
-                <Route path="/agent-manager/create" element={<AgentCreate />} />
-                <Route path="/agent-manager/:agent_name" element={<AgentEdit />} />
+                <Route path="/agent/search" element={<AgentSearch />} />
+                <Route path="/agent/create" element={<AgentCreate />} />
+                <Route path="/agent/edit" element={<AgentEdit />} />
+                <Route path="/agent/search/:agent_name" element={<AgentSearchByName />} />
 
-                <Route path="/ability-manager" element={<AbilityManager />} />
-                <Route path="/ability-manager/:ability_name" element={<AbilityEdit />} />
-                <Route path="/ability-manager/create" element={<AbilityCreate />} />
+                <Route path="/ability/search" element={<AbilitySearch />} />
+                <Route path="/ability/search/:ability_name" element={<AbilitySearchByName />} />
+                <Route path="/ability/edit" element={<AbilityEdit />} />
+                <Route path="/ability/create" element={<AbilityCreate />} />
             </Routes>
         </BrowserRouter>
     );

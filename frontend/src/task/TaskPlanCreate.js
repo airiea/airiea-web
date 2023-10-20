@@ -32,7 +32,7 @@ const TaskPlanCreate = () => {
         };
 
         try {
-            const response = await axios.post('/task-manager/plan/create', updatedData);
+            const response = await axios.post('/task/plan/create', updatedData);
             alert(response.data);
         } catch (error) {
             alert('Error creating task plan.');
@@ -43,6 +43,8 @@ const TaskPlanCreate = () => {
         <div>
             <NavBar />
             <Container>
+                <h2 className="my-4">Plan Task</h2>
+
                 <Form onSubmit={handleSubmit}>
 
                     <FormGroup row>

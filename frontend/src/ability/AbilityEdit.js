@@ -17,7 +17,7 @@ const AbilityEdit = () => {
     useEffect(() => {
         const fetchAbility = async () => {
             try {
-                const response = await axios.get(`/ability-manager/${ability_name}`);
+                const response = await axios.get(`/ability/search/${ability_name}`);
                 setAbility(response.data);
                 setLoading(false);
             } catch (err) {
@@ -36,7 +36,7 @@ const AbilityEdit = () => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.put(`/ability-manager/edit/${ability_name}`, ability);
+            const response = await axios.put(`/ability/edit`, ability);
             alert(response.data);
         } catch (err) {
             alert('Error updating the ability!');

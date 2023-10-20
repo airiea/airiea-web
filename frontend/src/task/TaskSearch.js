@@ -1,44 +1,15 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
-import {Alert, Button, Container, Form, FormGroup, Input, Label, Table} from "reactstrap";
+import {Alert, Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
 import axios from "axios";
 import NavBar from "../common/NavBar";
+import TaskTableView from "./TaskTableView";
 
 const searchTypeOptions = [
     { value: "task_id", label: "Task ID" },
     { value: "entity_id", label: "Entity ID" },
 ];
 
-const TaskTable = ({ tasks }) => {
-    if (!tasks) return null;
-
-    return (
-        <Table striped bordered responsive>
-            <thead>
-            <tr>
-                <th>Task ID</th>
-                <th>Entity ID</th>
-                <th>Updated Date</th>
-                <th>Created Date</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            {tasks.map(task => (
-                <tr key={task.task_id}>
-                    <td><Link to={`/task-manager/${task.task_id}`}>{task.task_id}</Link></td>
-                    <td>{task.entity_id}</td>
-                    <td>{task.updated_date}</td>
-                    <td>{task.created_date}</td>
-                    <td>{task.status}</td>
-                </tr>
-            ))}
-            </tbody>
-        </Table>
-    );
-};
-
-const TaskManager = () => {
+const TaskSearch = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchType, setSearchType] = useState('task_id');
     const [taskData, setTaskData] = useState(null);
@@ -50,8 +21,8 @@ const TaskManager = () => {
         setError(null);
 
         const endpoints = {
-            task_id: `/task-manager/${searchQuery}`,
-            entity_id: `/task-manager/entity_id/${searchQuery}`
+            task_id: `/task/search/${searchQuery}`,
+            entity_id: `/task/search/entity_id/${searchQuery}`
         };
 
         try {
@@ -61,8 +32,8 @@ const TaskManager = () => {
                 return;
             }
             setTaskData(Array.isArray(response.data) ? response.data : [response.data]);
-        } catch (err) {
-            setError(`Error searching for tasks: ${err.message}`);
+        } catch (error) {
+            setError(`Error searching for tasks: ${error.message}`);
         }
     };
 
@@ -70,7 +41,7 @@ const TaskManager = () => {
         <div>
             <NavBar />
             <Container>
-                <h2 className="my-4">Task Manager</h2>
+                <h2 className="my-4">Search Task</h2>
 
                 <Form onSubmit={handleSearchSubmit} className="mb-4">
                     <FormGroup>
@@ -91,19 +62,11 @@ const TaskManager = () => {
                 </Form>
 
                 {error && <Alert color="danger" className="mt-3">{error}</Alert>}
-                {taskData ? <TaskTable tasks={taskData} /> : <p>No tasks found.</p>}
-
-                <Link to="/task-manager/plan/create">
-                    <Button color="primary" className="mt-4">Create New Task Plan</Button>
-                </Link>
-
-                <Link to="/task-manager/input">
-                    <Button color="primary" className="mt-4">Input New Task</Button>
-                </Link>
+                {taskData ? <TaskTableView tasks={taskData} /> : <p>No tasks found.</p>}
             </Container>
         </div>
     );
 };
 
-export default TaskManager;
+export default TaskSearch;
 

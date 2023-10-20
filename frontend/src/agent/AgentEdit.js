@@ -18,7 +18,7 @@ const AgentEdit = () => {
     useEffect(() => {
         const fetchAgent = async () => {
             try {
-                const response = await axios.get(`/agent-manager/${agent_name}`);
+                const response = await axios.get(`/agent/search/${agent_name}`);
                 setAgent(response.data);
                 setFormData({
                     agent_name: response.data.agent_name,
@@ -45,9 +45,9 @@ const AgentEdit = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`/agent-manager/edit`, formData);
+            await axios.put(`/agent/edit`, formData);
             alert("Agent updated successfully!");  // Show success message
-            navigate('/agent-manager');
+            navigate('/agent/search');
         } catch (error) {
             console.error("Error updating agent:", error);
             alert("Error updating agent. Please try again.");  // Show error message

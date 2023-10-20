@@ -48,7 +48,9 @@ export default class NavBar extends Component {
                                     Task
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem href="/task-manager">Task Manager</DropdownItem>
+                                    <DropdownItem href="/task/search">Search Task</DropdownItem>
+                                    <DropdownItem href="/task/input">Input Task</DropdownItem>
+                                    <DropdownItem href="/task/plan/create">Plan Task</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>
@@ -58,7 +60,8 @@ export default class NavBar extends Component {
                                     Agent
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem href="/agent-manager">Agent Manager</DropdownItem>
+                                    <DropdownItem href="/agent/search">Search Agent</DropdownItem>
+                                    <DropdownItem href="/agent/create">Create Agent</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>
@@ -68,7 +71,8 @@ export default class NavBar extends Component {
                                     Ability
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem href="/ability-manager">Ability Manager</DropdownItem>
+                                    <DropdownItem href="/ability/search">Search Ability</DropdownItem>
+                                    <DropdownItem href="/ability/create">Create Ability</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>

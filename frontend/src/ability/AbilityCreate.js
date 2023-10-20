@@ -39,7 +39,7 @@ const AbilityCreate = () => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('/ability-manager/create', ability);
+            const response = await axios.post('/ability/create', ability);
             alert(response.data);
         } catch (error) {
             alert('Error creating ability!');

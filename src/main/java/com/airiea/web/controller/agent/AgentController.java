@@ -9,11 +9,11 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/agent-manager")
-public class AgentMangerController {
+@RequestMapping("/agent")
+public class AgentController {
     private final AgentService agentService;
 
-    public AgentMangerController(AgentService agentService) {
+    public AgentController(AgentService agentService) {
         this.agentService = agentService;
     }
 
@@ -24,17 +24,17 @@ public class AgentMangerController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<String> updateAgent(@RequestBody Agent agent) {
+    public ResponseEntity<String> editAgent(@RequestBody Agent agent) {
         agentService.updateAgent(agent);
         return ResponseEntity.ok("Agent updated successfully!");
     }
 
-    @GetMapping("/list-all")
+    @GetMapping("/search/list-all")
     public List<Agent> listAllAgent() {
         return agentService.getAllAgents();
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/search/{name}")
     public Agent getAgentByName(@PathVariable String name) {
         return agentService.getAgentByName(name);
     }

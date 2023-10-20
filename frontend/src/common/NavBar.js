@@ -35,6 +35,16 @@ export default class NavBar extends Component {
                         <Nav className="me-auto" navbar>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
+                                    Knowledge
+                                </DropdownToggle>
+                                <DropdownMenu right>
+                                    <DropdownItem href="/knowledge/search">Knowledge Search</DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>Reset</DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret>
                                     Task
                                 </DropdownToggle>
                                 <DropdownMenu right>

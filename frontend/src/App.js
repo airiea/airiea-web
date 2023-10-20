@@ -12,12 +12,17 @@ import AbilityCreate from "./ability/AbilityCreate";
 import AbilityEdit from "./ability/AbilityEdit";
 import Task from "./task/Task";
 import TaskInput from "./task/TaskInput";
+import KnowledgeSearch from "./knowledge/KnowledgeSearch";
+import Knowledge from "./knowledge/Knowledge";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
+
+                <Route path="/knowledge/search" element={<KnowledgeSearch />} />
+                <Route path="/knowledge/search/:knowledge_id" element={<Knowledge />} />
 
                 <Route path="/task-manager" element={<TaskManager />} />
                 <Route path="/task-manager/input" element={<TaskInput />} />

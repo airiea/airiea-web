@@ -71,7 +71,7 @@ const TaskInput = () => {
                     <FormGroup row>
                         <Label for="task_input_string" sm={2}>Task Input String</Label>
                         <Col sm={10}>
-                            <Input type="text" name="task_input_string" id="task_input_string" value={data.task_input_string} onChange={handleChange} />
+                            <Input type="textarea" name="task_input_string" id="task_input_string" value={data.task_input_string} onChange={handleChange} />
                         </Col>
                     </FormGroup>
 

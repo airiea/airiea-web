@@ -2,9 +2,11 @@ package com.airiea.web.spring;
 
 import com.airiea.dao.AbilityDao;
 import com.airiea.dao.AgentDao;
+import com.airiea.dao.KnowledgeDao;
 import com.airiea.dao.TaskDao;
 import com.airiea.dao.impl.AbilityDaoImpl;
 import com.airiea.dao.impl.AgentDaoImpl;
+import com.airiea.dao.impl.KnowledgeDaoImpl;
 import com.airiea.dao.impl.TaskDaoImpl;
 import com.airiea.dao.publisher.CreateTaskPlanEventPublisher;
 import com.airiea.dao.publisher.InputTaskEventPublisher;
@@ -41,6 +43,11 @@ public class AwsConfig {
     @Bean(name = "AbilityDao")
     public AbilityDao getAbilityDao() {
         return new AbilityDaoImpl(getDynamoDBMapper());
+    }
+
+    @Bean(name = "KnowledgeDao")
+    public KnowledgeDao getKnowledgeDao() {
+        return new KnowledgeDaoImpl(getDynamoDBMapper());
     }
 
     @Bean(name = "InputTaskEventPublisher")

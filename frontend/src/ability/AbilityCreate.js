@@ -70,7 +70,7 @@ const AbilityCreate = () => {
                 );
             case "max_tokens":
             case "temperature":
-                return <Input type="number" name={key} max={key === "max_tokens" ? 2048 : 1} min={key === "max_tokens" ? 20 : 0} step={key === "temperature" ? "0.01" : undefined} value={ability[key]} onChange={handleChange} />;
+                return <Input type="number" name={key} max={key === "max_tokens" ? 16000 : 1} min={key === "max_tokens" ? 20 : 0} step={key === "temperature" ? "0.01" : undefined} value={ability[key]} onChange={handleChange} />;
             case "example_input":
             case "example_output":
                 return <Input type="textarea" name={key} value={ability[key]} onChange={handleChange} />;

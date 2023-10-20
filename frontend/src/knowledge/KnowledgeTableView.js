@@ -1,40 +1,22 @@
 import {Table} from "reactstrap";
 import {Link} from "react-router-dom";
-import React, {useState} from "react";
+import React from "react";
+import useSortableData from "../common/UseSortableData";
 
 const KnowledgeTableView = ({ knowledge }) => {
-    const [sortField, setSortField] = useState('knowledge_id');
-    const [sortDirection, setSortDirection] = useState('asc'); // 'asc' for ascending, 'desc' for descending
+    const { items: sortedKnowledge, requestSort } = useSortableData(knowledge, 'knowledge_id');
 
     if (!knowledge || knowledge.length === 0) return null;
-
-    const handleSort = (field) => {
-        if (sortField === field) {
-            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-        } else {
-            setSortField(field);
-            setSortDirection('asc');
-        }
-    };
-
-    const sortedKnowledge = [...knowledge].sort((a, b) => {
-        const aValue = a[sortField];
-        const bValue = b[sortField];
-
-        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-        return 0;
-    });
 
     return (
         <Table striped bordered responsive>
             <thead>
             <tr>
-                <th onClick={() => handleSort('knowledge_id')} style={{ cursor: 'pointer' }}>Knowledge ID</th>
-                <th onClick={() => handleSort('agent_name')} style={{ cursor: 'pointer' }}>Agent Name</th>
-                <th onClick={() => handleSort('entity_id')} style={{ cursor: 'pointer' }}>Entity ID</th>
-                <th onClick={() => handleSort('updated_date')} style={{ cursor: 'pointer' }}>Updated Date</th>
-                <th onClick={() => handleSort('created_date')} style={{ cursor: 'pointer' }}>Created Date</th>
+                <th onClick={() => requestSort('knowledge_id')}>Knowledge ID</th>
+                <th onClick={() => requestSort('agent_name')}>Agent Name</th>
+                <th onClick={() => requestSort('entity_id')}>Entity ID</th>
+                <th onClick={() => requestSort('updated_date')}>Updated Date</th>
+                <th onClick={() => requestSort('created_date')}>Created Date</th>
             </tr>
             </thead>
             <tbody>

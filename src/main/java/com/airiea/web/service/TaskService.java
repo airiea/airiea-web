@@ -12,4 +12,5 @@ public interface TaskService {
     List<Task> getTaskListByEntityId(String entityId);
     void publishInputTaskEvent(InputTaskEvent inputTaskEvent);
     void publishCreateTaskPlanEvent(CreateTaskPlanEvent createTaskPlanEvent);
+
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/knowledge/search")
+@RequestMapping("/knowledge")
 public class KnowledgeController {
 
     private final KnowledgeService knowledgeService;
@@ -17,12 +17,12 @@ public class KnowledgeController {
         this.knowledgeService = knowledgeService;
     }
 
-    @GetMapping("/agent_name/{name}")
+    @GetMapping("/search/agent_name/{name}")
     public List<Knowledge> getKnowledgeListByAgentName(@PathVariable String name) {
         return knowledgeService.getKnowledgeByAgentName(name);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public Knowledge getKnowledgeById(@PathVariable String id) {
         return knowledgeService.getKnowledgeById(id);
     }

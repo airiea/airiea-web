@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 import {Col, Row} from "reactstrap";
 
-const LabeledInfo = ({ label, value, labelSize = 6, valueSize = 6 }) => (
+const LabeledInfo = ({ label, value, labelSize = 12, valueSize = 12 }) => (
     <Row className="mb-4">
         <Col md={labelSize} style={{ marginBottom: '15px' }}>
             <strong style={{ fontSize: '1.1em' }}>{label}:</strong>

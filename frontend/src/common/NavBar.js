@@ -38,7 +38,7 @@ export default class NavBar extends Component {
                                     Knowledge
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem href="/knowledge/search">Knowledge Search</DropdownItem>
+                                    <DropdownItem href="/knowledge/search">Search Knowledge</DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>Reset</DropdownItem>
                                 </DropdownMenu>

@@ -29,10 +29,10 @@ public class AbilityController {
         return abilityService.getAbilityByName(name);
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<String> editAbility(@RequestBody Ability ability) {
+    @PutMapping("/edit/{name}")
+    public ResponseEntity<String> editAbility(@RequestBody Ability ability, @PathVariable String name) {
         abilityService.updateAbility(ability);
-        return ResponseEntity.ok("Ability updated successfully!");
+        return ResponseEntity.ok(name + "updated successfully!");
     }
 
     @GetMapping("/search/list-all")

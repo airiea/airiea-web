@@ -1,33 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 import NavBar from "../common/NavBar";
-import {Alert, Container, FormGroup, Input, Label} from 'reactstrap';
+import {Container, FormGroup, Input, Label} from 'reactstrap';
 import AgentTableView from "./AgentTableView";
-
+import {useSearchData} from '../api/UseSearchData'; // Import the hook
+import ErrorAlert from "../common/ErrorAlert"; // Import the error component
 
 const AgentSearch = () => {
-    const [agents, setAgents] = useState([]);
+    const { data: agents, loading, error } = useSearchData('/agent/search/list-all');  // Using the hook
     const [searchTerm, setSearchTerm] = useState('');
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchAgents = async () => {
-            try {
-                const response = await axios.get('/agent/search/list-all');
-                if (response.status !== 200 || !response.data) {
-                    setError('Failed to retrieve agents. Please try again later.');
-                    return;
-                }
-                setAgents(response.data);
-            } catch (error) {
-                setError(`Error listing for agents: ${error.message}`);
-            }
-        };
+    const filteredAgents = agents ? agents.filter(agent => agent.agent_name.toLowerCase().includes(searchTerm.toLowerCase())) : [];
 
-        fetchAgents();
-    }, []);
-
-    const filteredAgents = agents.filter(agent => agent.agent_name.toLowerCase().includes(searchTerm.toLowerCase()));
+    if (loading) return <div>Loading...</div>;
 
     return (
         <div>
@@ -46,7 +30,8 @@ const AgentSearch = () => {
                     />
                 </FormGroup>
 
-                {error && <Alert color="danger" className="mt-3">{error}</Alert>}
+                <ErrorAlert message={error} />  {/* Using the error component */}
+
                 {filteredAgents.length > 0 ? <AgentTableView agents={filteredAgents} /> : <p>No agents found.</p>}
             </Container>
         </div>
@@ -54,4 +39,3 @@ const AgentSearch = () => {
 };
 
 export default AgentSearch;
-

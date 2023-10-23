@@ -22,7 +22,5 @@ const TaskView = ({ task }) => (
     </Card>
 );
 
-
-
 export default TaskView;
 

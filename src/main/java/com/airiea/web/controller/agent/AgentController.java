@@ -23,10 +23,10 @@ public class AgentController {
         return ResponseEntity.ok("Agent created successfully!");
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<String> editAgent(@RequestBody Agent agent) {
+    @PutMapping("/edit/{name}")
+    public ResponseEntity<String> editAgent(@RequestBody Agent agent, @PathVariable String name) {
         agentService.updateAgent(agent);
-        return ResponseEntity.ok("Agent updated successfully!");
+        return ResponseEntity.ok(name + "updated successfully!");
     }
 
     @GetMapping("/search/list-all")

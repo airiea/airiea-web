@@ -1,4 +1,4 @@
-import {Table} from "reactstrap";
+import {Button, Table} from "reactstrap";
 import {Link} from "react-router-dom";
 import React from "react";
 import useSortableData from "../common/UseSortableData";
@@ -22,6 +22,10 @@ const AgentTableView = ({ agents }) => {
                 <tr key={agent.agent_name}>
                     <td>
                         <Link to={`/agent/search/${agent.agent_name}`}>{agent.agent_name}</Link>
+                        {' '}
+                        <Link to={`/agent/edit/${agent.agent_name}`}>
+                            <Button color="primary" size="sm">Edit</Button>
+                        </Link>
                     </td>
                     <td>{agent.agent_role}</td>
                 </tr>

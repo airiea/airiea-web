@@ -1,4 +1,4 @@
-import {Table} from "reactstrap";
+import {Button, Table} from "reactstrap";
 import {Link} from "react-router-dom";
 import React from "react";
 import useSortableData from "../common/UseSortableData";
@@ -22,6 +22,10 @@ const AbilityTableView = ({ abilities }) => {
                 <tr key={ability.ability_name}>
                     <td>
                         <Link to={`/ability/search/${ability.ability_name}`}>{ability.ability_name}</Link>
+                        {' '}
+                        <Link to={`/ability/edit/${ability.ability_name}`}>
+                            <Button color="primary" size="sm">Edit</Button>
+                        </Link>
                     </td>
                     <td>{ability.model_object}</td>
                 </tr>

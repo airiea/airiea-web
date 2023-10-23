@@ -1,32 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {Alert, Container, FormGroup, Input, Label} from 'reactstrap';
+import React, {useState} from 'react';
+import {Container, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
 import AbilityTableView from "./AbilityTableView";
+import {useSearchData} from '../api/UseSearchData';
+import ErrorAlert from "../common/ErrorAlert";
 
 const AbilitySearch = () => {
-    const [abilities, setAbilities] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [error, setError] = useState(null);
+    const { data: abilities, loading, error } = useSearchData('/ability/search/list-all', '');
 
-    useEffect(() => {
-        const fetchAbilities = async () => {
-            try {
-                const response = await axios.get('/ability/search/list-all');
-                if (response.status !== 200 || !response.data) {
-                    setError('Failed to retrieve abilities. Please try again later.');
-                    return;
-                }
-                setAbilities(response.data);
-            } catch (error) {
-                setError(`Error listing for abilities: ${error.message}`);
-            }
-        };
-
-        fetchAbilities();
-    }, []);
-
-    const filteredAbilities = abilities.filter(ability => ability.ability_name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredAbilities = abilities ? abilities.filter(ability => ability.ability_name.toLowerCase().includes(searchTerm.toLowerCase())) : [];
 
     return (
         <div>
@@ -45,13 +28,12 @@ const AbilitySearch = () => {
                     />
                 </FormGroup>
 
-                {error && <Alert color="danger" className="mt-3">{error}</Alert>}
-                {filteredAbilities.length > 0 ? <AbilityTableView abilities={filteredAbilities} /> : <p>No abilities found.</p>}
+                <ErrorAlert message={error} />
 
+                {loading ? <p>Loading abilities...</p> : (filteredAbilities.length > 0 ? <AbilityTableView abilities={filteredAbilities} /> : <p>No abilities found.</p>)}
             </Container>
         </div>
     );
 };
 
 export default AbilitySearch;
-

@@ -3,54 +3,45 @@ import axios from 'axios';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
+import {useSearchData} from '../api/UseSearchData';
+import ErrorAlert from "../common/ErrorAlert";
 
 const AgentEdit = () => {
     const { agent_name } = useParams();
     const navigate = useNavigate();
-    const [agent, setAgent] = useState(null);
-    const [formData, setFormData] = useState({
+
+    // Get searched agent data using the custom hook
+    const { data: searchedAgent, loading, error: searchError } = useSearchData(`/agent/search`, agent_name);
+
+    // This will be the version of the agent that we edit and send back to the server.
+    const [editedAgent, setEditedAgent] = useState({
         agent_name: '',
         agent_role: '',
         agent_goal: '',
         ability_name: ''
     });
 
+    const [updateError, setUpdateError] = useState(null);
+
     useEffect(() => {
-        const fetchAgent = async () => {
-            try {
-                const response = await axios.get(`/agent/search/${agent_name}`);
-                setAgent(response.data);
-                setFormData({
-                    agent_name: response.data.agent_name,
-                    agent_role: response.data.agent_role,
-                    agent_goal: response.data.agent_goal,
-                    ability_name: response.data.ability_name
-                });
-            } catch (error) {
-                console.error("Error fetching agent data:", error);
-            }
-        };
+        if (searchedAgent) {
+            setEditedAgent(searchedAgent);
+        }
+    }, [searchedAgent]);
 
-        fetchAgent();
-    }, [agent_name]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+    const handleChange = ({ target: { name, value } }) => {
+        setEditedAgent(prevState => ({ ...prevState, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`/agent/edit`, formData);
-            alert("Agent updated successfully!");  // Show success message
-            navigate('/agent/search');
+            await axios.put(`/agent/edit/${agent_name}`, editedAgent);
+            alert("Agent updated successfully!");
+            navigate(`/agent/search/${agent_name}`);
         } catch (error) {
             console.error("Error updating agent:", error);
-            alert("Error updating agent. Please try again.");  // Show error message
+            setUpdateError('Error updating agent. Please try again.');
         }
     };
 
@@ -59,14 +50,17 @@ const AgentEdit = () => {
             <NavBar />
             <Container>
                 <h2 className="my-4">Edit Agent: {agent_name}</h2>
-                {agent ? (
+
+                <ErrorAlert message={searchError || updateError} />
+
+                {!loading && editedAgent && (
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>
                             <Label for="agent_name">Agent Name</Label>
                             <Input
                                 type="text"
                                 id="agent_name"
-                                value={agent.agent_name}
+                                value={editedAgent.agent_name}
                                 readOnly
                             />
                         </FormGroup>
@@ -76,7 +70,7 @@ const AgentEdit = () => {
                             <Input
                                 type="text"
                                 id="created_date"
-                                value={new Date(agent.created_date).toLocaleDateString()}
+                                value={new Date(editedAgent.created_date).toLocaleDateString()}
                                 readOnly
                             />
                         </FormGroup>
@@ -87,7 +81,7 @@ const AgentEdit = () => {
                                 type="text"
                                 id="agent_role"
                                 name="agent_role"
-                                value={formData.agent_role}
+                                value={editedAgent.agent_role}
                                 onChange={handleChange}
                             />
                         </FormGroup>
@@ -98,7 +92,7 @@ const AgentEdit = () => {
                                 type="text"
                                 id="agent_goal"
                                 name="agent_goal"
-                                value={formData.agent_goal}
+                                value={editedAgent.agent_goal}
                                 onChange={handleChange}
                             />
                         </FormGroup>
@@ -109,20 +103,19 @@ const AgentEdit = () => {
                                 type="text"
                                 id="ability_name"
                                 name="ability_name"
-                                value={formData.ability_name}
+                                value={editedAgent.ability_name}
                                 onChange={handleChange}
                             />
                         </FormGroup>
 
                         <Button color="primary" type="submit">Update Agent</Button>
                     </Form>
-                ) : (
-                    <p>Loading agent data...</p>
                 )}
+
+                {loading && <p>Loading agent data...</p>}
             </Container>
         </div>
     );
 };
 
 export default AgentEdit;
-

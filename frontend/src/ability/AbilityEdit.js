@@ -1,51 +1,42 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-
-// Reactstrap Imports
 import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
-
 import NavBar from "../common/NavBar";
 import {useParams} from "react-router-dom";
+import {useSearchData} from "../api/UseSearchData";
+import ErrorAlert from "../common/ErrorAlert";
 
 const AbilityEdit = () => {
     const { ability_name } = useParams();
-    const [ability, setAbility] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { data: searchedAbility, loading, error: searchError } = useSearchData(`/ability/search`, ability_name);
+
+    const [editedAbility, setEditedAbility] = useState(null);
+    const [updateError, setUpdateError] = useState(null);
+
     const editableFields = ["description", "response_requirement", "example_input", "example_output", "prompt_format"];
 
     useEffect(() => {
-        const fetchAbility = async () => {
-            try {
-                const response = await axios.get(`/ability/search/${ability_name}`);
-                setAbility(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError("Failed to fetch ability. Please try again.");
-                setLoading(false);
-                console.error("Error fetching ability:", err);
-            }
-        };
-
-        fetchAbility();
-    }, [ability_name]);
+        if (searchedAbility) {
+            setEditedAbility(searchedAbility);
+        }
+    }, [searchedAbility]);
 
     const handleChange = ({ target: { name, value } }) => {
-        setAbility(prevState => ({ ...prevState, [name]: value }));
+        if (editedAbility) {
+            setEditedAbility(prevState => ({ ...prevState, [name]: value }));
+        }
     };
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.put(`/ability/edit`, ability);
+            const response = await axios.put(`/ability/edit/${ability_name}`, editedAbility);
             alert(response.data);
         } catch (err) {
-            alert('Error updating the ability!');
+            setUpdateError('Error updating the ability. Please try again.');
         }
     };
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
-    if (!ability) return <div>No data found!</div>;
 
     return (
         <div>
@@ -56,44 +47,50 @@ const AbilityEdit = () => {
                         <h2>Edit Ability</h2>
                     </Col>
                 </Row>
-                <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-                    {Object.keys(ability).map((key, index) => (
-                        <FormGroup row key={index}>
-                            <Label for={key} sm={2}>
-                                {key.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
-                            </Label>
+
+                <ErrorAlert message={searchError || updateError} />
+
+                {editedAbility && (
+                    <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+                        {Object.keys(editedAbility).map((key, index) => (
+                            <FormGroup row key={index}>
+                                <Label for={key} sm={2}>
+                                    {key.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                                </Label>
+                                <Col sm={10}>
+                                    {editableFields.includes(key) ? (
+                                        <Input
+                                            type="textarea"
+                                            name={key}
+                                            id={key}
+                                            value={editedAbility[key]}
+                                            onChange={handleChange}
+                                        />
+                                    ) : (
+                                        <Input
+                                            type="text"
+                                            name={key}
+                                            id={key}
+                                            value={editedAbility[key]}
+                                            disabled
+                                        />
+                                    )}
+                                </Col>
+                            </FormGroup>
+                        ))}
+                        <FormGroup row>
                             <Col sm={10}>
-                                {editableFields.includes(key) ? (
-                                    <Input
-                                        type="textarea"
-                                        name={key}
-                                        id={key}
-                                        value={ability[key]}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    <Input
-                                        type="text"
-                                        name={key}
-                                        id={key}
-                                        value={ability[key]}
-                                        disabled
-                                    />
-                                )}
+                                <Button type="submit" color="primary">Update Ability</Button>
                             </Col>
                         </FormGroup>
-                    ))}
-                    <FormGroup row>
-                        <Col sm={10}>
-                            <Button type="submit" color="primary">Update Ability</Button>
-                        </Col>
-                    </FormGroup>
-                </Form>
+                    </Form>
+                )}
             </Container>
         </div>
     );
 }
 
 export default AbilityEdit;
+
 
 

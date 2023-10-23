@@ -33,12 +33,12 @@ function App() {
 
                 <Route path="/agent/search" element={<AgentSearch />} />
                 <Route path="/agent/create" element={<AgentCreate />} />
-                <Route path="/agent/edit" element={<AgentEdit />} />
+                <Route path="/agent/edit/:agent_name" element={<AgentEdit />} />
                 <Route path="/agent/search/:agent_name" element={<AgentSearchByName />} />
 
                 <Route path="/ability/search" element={<AbilitySearch />} />
                 <Route path="/ability/search/:ability_name" element={<AbilitySearchByName />} />
-                <Route path="/ability/edit" element={<AbilityEdit />} />
+                <Route path="/ability/edit/:ability_name" element={<AbilityEdit />} />
                 <Route path="/ability/create" element={<AbilityCreate />} />
             </Routes>
         </BrowserRouter>

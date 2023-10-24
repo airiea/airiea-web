@@ -1,10 +1,10 @@
 import React from 'react';
 import {Container} from 'reactstrap';
 import {useParams} from "react-router-dom";
-import NavBar from "../common/NavBar";
+import NavBar from "../../common/NavBar";
 import AbilityView from "./AbilityView";
-import {useSearchData} from "../api/UseSearchData";
-import ErrorAlert from "../common/ErrorAlert";
+import {useSearchData} from "../../common/UseSearchData";
+import ErrorAlert from "../../common/ErrorAlert";
 
 const AbilitySearchByName = () => {
     const { ability_name } = useParams();

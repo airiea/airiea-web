@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Container, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
-import AbilityTableView from "./AbilityTableView";
-import {useSearchData} from '../api/UseSearchData';
+import AbilityTableView from "./hook/AbilityTableView";
+import {useSearchData} from '../common/UseSearchData';
 import ErrorAlert from "../common/ErrorAlert";
 
-const AbilitySearch = () => {
+function AbilitySearchComponent() {
     const [searchTerm, setSearchTerm] = useState('');
     const { data: abilities, loading, error } = useSearchData('/ability/search/list-all', '');
 
@@ -36,4 +36,4 @@ const AbilitySearch = () => {
     );
 };
 
-export default AbilitySearch;
+export default AbilitySearchComponent;

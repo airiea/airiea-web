@@ -3,7 +3,7 @@ import axios from 'axios';
 import NavBar from "../common/NavBar";
 import {Alert, Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 
-const AgentCreate = () => {
+function AgentCreateComponent () {
     const [agentData, setAgentData] = useState({
         agent_name: '',
         agent_role: '',
@@ -74,6 +74,6 @@ const AgentCreate = () => {
     );
 };
 
-export default AgentCreate;
+export default AgentCreateComponent;
 
 

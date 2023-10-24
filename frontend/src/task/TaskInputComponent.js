@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Button, Col, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
 
-const TaskInput = () => {
+function TaskInputComponent() {
     const [data, setData] = useState({
         entity_id: '',
         task_input_source: '',
@@ -102,5 +102,5 @@ const TaskInput = () => {
     );
 }
 
-export default TaskInput;
+export default TaskInputComponent;
 

@@ -60,6 +60,7 @@ export default class NavBar extends Component {
                                     Agent
                                 </DropdownToggle>
                                 <DropdownMenu right>
+                                    <DropdownItem href="/agent/chat">Chat With Agent</DropdownItem>
                                     <DropdownItem href="/agent/search">Search Agent</DropdownItem>
                                     <DropdownItem href="/agent/create">Create Agent</DropdownItem>
                                     <DropdownItem divider />

@@ -32,6 +32,16 @@
 			<artifactId>airiea-dao</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.airiea</groupId>
+			<artifactId>openai-model</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.airiea</groupId>
+			<artifactId>openai-client</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.amazonaws</groupId>

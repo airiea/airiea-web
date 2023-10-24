@@ -1,10 +1,10 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {Container, Spinner} from 'reactstrap';
-import NavBar from "../common/NavBar";
+import NavBar from "../../common/NavBar";
 import TaskView from "./TaskView";
-import {useSearchData} from '../api/UseSearchData'; // Make sure this path is correct.
-import ErrorAlert from "../common/ErrorAlert"; // Make sure this path is correct.
+import {useSearchData} from '../../common/UseSearchData'; // Make sure this path is correct.
+import ErrorAlert from "../../common/ErrorAlert"; // Make sure this path is correct.
 
 const TaskSearchById = () => {
     const { task_id } = useParams();

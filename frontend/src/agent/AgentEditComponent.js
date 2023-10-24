@@ -3,10 +3,10 @@ import axios from 'axios';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
-import {useSearchData} from '../api/UseSearchData';
+import {useSearchData} from '../common/UseSearchData';
 import ErrorAlert from "../common/ErrorAlert";
 
-const AgentEdit = () => {
+function AgentEditComponent() {
     const { agent_name } = useParams();
     const navigate = useNavigate();
 
@@ -118,4 +118,4 @@ const AgentEdit = () => {
     );
 };
 
-export default AgentEdit;
+export default AgentEditComponent;

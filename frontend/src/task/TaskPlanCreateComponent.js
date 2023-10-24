@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Button, Col, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import NavBar from "../common/NavBar";
 
-const TaskPlanCreate = () => {
+function TaskPlanCreateComponent() {
     const [data, setData] = useState({
         entity_ids: [],
         agent_name_one: null,
@@ -102,4 +102,4 @@ const TaskPlanCreate = () => {
     );
 }
 
-export default TaskPlanCreate;
+export default TaskPlanCreateComponent;

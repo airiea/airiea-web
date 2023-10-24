@@ -1,14 +1,11 @@
 import React from 'react';
 import {Container, Spinner} from 'reactstrap';
-import {useParams} from "react-router-dom";
-import NavBar from "../common/NavBar";
+import NavBar from "../../common/NavBar";
 import AgentView from "./AgentView";
-import {useSearchData} from "../api/UseSearchData";
-import ErrorAlert from "../common/ErrorAlert";
+import {useSearchData} from "../../common/UseSearchData";
+import ErrorAlert from "../../common/ErrorAlert";
 
-const AgentSearchByName = () => {
-    const { agent_name } = useParams();
-
+const AgentSearchByName = (agent_name) => {
     // Use the custom hook to fetch the agent data
     const { data: agent, loading, error } = useSearchData(`/agent/search`, agent_name);
 

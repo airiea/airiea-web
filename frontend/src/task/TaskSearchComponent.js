@@ -1,39 +1,45 @@
 import React, {useState} from "react";
-import {Alert, Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
+import {Alert, Button, Container, Form, FormGroup, Input, Label, Spinner} from "reactstrap";
 import axios from "axios";
 import NavBar from "../common/NavBar";
-import KnowledgeTableView from "./KnowledgeTableView";
+import TaskTableView from "./hook/TaskTableView";
 
 const searchTypeOptions = [
-    { value: "knowledge_id", label: "Knowledge ID" },
-    { value: "agent_name", label: "Agent Name" },
+    { value: "task_id", label: "Task ID" },
+    { value: "entity_id", label: "Entity ID" },
 ];
 
-const KnowledgeSearch = () => {
+function TaskSearchComponent() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchType, setSearchType] = useState('knowledge_id');
-    const [knowledgeData, setKnowledgeData] = useState(null);
+    const [searchType, setSearchType] = useState('task_id');
+    const [taskData, setTaskData] = useState(null);
+
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleSearchSubmit = async (e) => {
         e.preventDefault();
-        setKnowledgeData(null);
+
+        setTaskData(null);
         setError(null);
+        setLoading(true);
 
         const endpoints = {
-            knowledge_id: `/knowledge/search/${searchQuery}`,
-            agent_name: `/knowledge/search/agent_name/${searchQuery}`
+            task_id: `/task/search/${searchQuery}`,
+            entity_id: `/task/search/entity_id/${searchQuery}`
         };
 
         try {
             const response = await axios.get(endpoints[searchType]);
             if (response.status !== 200 || !response.data) {
-                setError('Failed to retrieve knowledge. Please try again later.');
+                setError('Failed to retrieve tasks. Please try again later.');
                 return;
             }
-            setKnowledgeData(Array.isArray(response.data) ? response.data : [response.data]);
-        } catch (err) {
-            setError(`Error searching for knowledge: ${err.message}`);
+            setTaskData(Array.isArray(response.data) ? response.data : [response.data]);
+        } catch (error) {
+            setError(`Error searching for tasks: ${error.message}`);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -41,7 +47,8 @@ const KnowledgeSearch = () => {
         <div>
             <NavBar />
             <Container>
-                <h2 className="my-4">Knowledge Search</h2>
+                {loading && <Spinner className='my-4' />}
+                <h2 className="my-4">Search Task</h2>
 
                 <Form onSubmit={handleSearchSubmit} className="mb-4">
                     <FormGroup>
@@ -62,10 +69,11 @@ const KnowledgeSearch = () => {
                 </Form>
 
                 {error && <Alert color="danger" className="mt-3">{error}</Alert>}
-                {knowledgeData ? <KnowledgeTableView knowledge={knowledgeData} /> : <p>No knowledge found.</p>}
+                {taskData ? <TaskTableView tasks={taskData} /> : <p>No tasks found.</p>}
             </Container>
         </div>
     );
 };
 
-export default KnowledgeSearch;
+export default TaskSearchComponent;
+

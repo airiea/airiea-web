@@ -1,7 +1,7 @@
 import {Button, Table} from "reactstrap";
 import {Link} from "react-router-dom";
 import React from "react";
-import useSortableData from "../common/UseSortableData";
+import useSortableData from "../../common/UseSortableData";
 
 const AgentTableView = ({ agents }) => {
     const { items: sortedAgents, requestSort, sortField, sortDirection } =

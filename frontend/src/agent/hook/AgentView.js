@@ -1,6 +1,6 @@
 import {Card, CardBody, CardTitle} from "reactstrap";
 import {FaCalendarAlt, FaCommentDots, FaPencilAlt, FaRegStar} from "react-icons/fa";
-import LabeledInfo from "../common/LabeledInfo";
+import LabeledInfo from "../../common/LabeledInfo";
 
 const AgentView = ({ agent }) => (
     <Card style={{ padding: '20px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>

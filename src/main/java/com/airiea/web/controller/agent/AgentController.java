@@ -1,7 +1,10 @@
 package com.airiea.web.controller.agent;
 
+import com.airiea.model.operation.ChatAgentRequest;
+import com.airiea.model.operation.ChatAgentResponse;
 import com.airiea.model.resource.Agent;
 import com.airiea.web.service.AgentService;
+import com.airiea.web.service.AirieaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/agent")
 public class AgentController {
+    private final AirieaService airieaService;
     private final AgentService agentService;
 
-    public AgentController(AgentService agentService) {
+    public AgentController(AgentService agentService, AirieaService airieaService) {
+        this.airieaService = airieaService;
         this.agentService = agentService;
     }
 
@@ -21,6 +26,11 @@ public class AgentController {
     public ResponseEntity<String> createAgent(@RequestBody Agent agent) {
         agentService.createAgent(agent);
         return ResponseEntity.ok("Agent created successfully!");
+    }
+
+    @PostMapping("/chat")
+    public ChatAgentResponse promptAgent(@RequestBody ChatAgentRequest request) {
+        return airieaService.chatAgent(request);
     }
 
     @PutMapping("/edit/{name}")

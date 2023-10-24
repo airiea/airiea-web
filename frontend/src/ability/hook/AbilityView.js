@@ -1,6 +1,6 @@
 import {Card, CardBody, CardTitle} from "reactstrap";
 import {FaCommentDots, FaFileAlt, FaPencilAlt, FaRegStar, FaTemperatureLow} from "react-icons/fa";
-import LabeledInfo from "../common/LabeledInfo";
+import LabeledInfo from "../../common/LabeledInfo";
 
 const AbilityView = ({ ability }) => (
     <Card style={{ padding: '20px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>

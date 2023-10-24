@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import NavBar from "../common/NavBar";
 import {Container, FormGroup, Input, Label} from 'reactstrap';
-import AgentTableView from "./AgentTableView";
-import {useSearchData} from '../api/UseSearchData'; // Import the hook
+import AgentTableView from "./hook/AgentTableView";
+import {useSearchData} from '../common/UseSearchData'; // Import the hook
 import ErrorAlert from "../common/ErrorAlert"; // Import the error component
 
-const AgentSearch = () => {
+function AgentSearchComponent() {
     const { data: agents, loading, error } = useSearchData('/agent/search/list-all');  // Using the hook
+
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredAgents = agents ? agents.filter(agent => agent.agent_name.toLowerCase().includes(searchTerm.toLowerCase())) : [];
@@ -38,4 +39,4 @@ const AgentSearch = () => {
     );
 };
 
-export default AgentSearch;
+export default AgentSearchComponent;

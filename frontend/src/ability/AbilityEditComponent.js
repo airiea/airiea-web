@@ -3,10 +3,10 @@ import axios from 'axios';
 import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 import NavBar from "../common/NavBar";
 import {useParams} from "react-router-dom";
-import {useSearchData} from "../api/UseSearchData";
+import {useSearchData} from "../common/UseSearchData";
 import ErrorAlert from "../common/ErrorAlert";
 
-const AbilityEdit = () => {
+function AbilityEditComponent() {
     const { ability_name } = useParams();
     const { data: searchedAbility, loading, error: searchError } = useSearchData(`/ability/search`, ability_name);
 
@@ -90,7 +90,7 @@ const AbilityEdit = () => {
     );
 }
 
-export default AbilityEdit;
+export default AbilityEditComponent;
 
 
 

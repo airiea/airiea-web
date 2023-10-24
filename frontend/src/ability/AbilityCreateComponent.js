@@ -3,7 +3,18 @@ import axios from 'axios';
 import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 import NavBar from "../common/NavBar";
 
-const AbilityCreate = () => {
+
+const allModelsList = {
+    "embedding": ["text-embedding-ada-002"],
+    "chat.completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
+    "completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
+    "answer.question": ["gpt-3.5-turbo", "gpt-4"],
+    "knowledge.content.enrichment": []
+};
+const modelObjectsList = ["embedding", "chat.completion", "completion", "answer.question", "knowledge.content.enrichment"];
+const updateTypeList = [null, "incremental_update", "complete_update"];
+
+function AbilityCreateComponent() {
     const [ability, setAbility] = useState({
         ability_name: '',
         model: null,
@@ -19,17 +30,6 @@ const AbilityCreate = () => {
         update_type: null,
         update_delimiter: null
     });
-
-    const allModelsList = {
-        "embedding": ["text-embedding-ada-002"],
-        "chat.completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
-        "completion": ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k"],
-        "answer.question": ["gpt-3.5-turbo", "gpt-4"],
-        "knowledge.content.enrichment": []
-    };
-
-    const modelObjectsList = ["embedding", "chat.completion", "completion", "answer.question", "knowledge.content.enrichment"];
-    const updateTypeList = [null, "incremental_update", "complete_update"];
 
     const modelsList = allModelsList[ability.model_object] || [];
 
@@ -116,5 +116,5 @@ const AbilityCreate = () => {
     );
 }
 
-export default AbilityCreate;
+export default AbilityCreateComponent;
 

@@ -4,9 +4,10 @@ import NavBar from "../../common/NavBar";
 import AgentView from "./AgentView";
 import {useSearchData} from "../../common/UseSearchData";
 import ErrorAlert from "../../common/ErrorAlert";
+import {useParams} from "react-router-dom";
 
-const AgentSearchByName = (agent_name) => {
-    // Use the custom hook to fetch the agent data
+const AgentSearchByName = () => {
+    const { agent_name } = useParams();
     const { data: agent, loading, error } = useSearchData(`/agent/search`, agent_name);
 
     return (
